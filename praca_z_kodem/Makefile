@@ -1,4 +1,4 @@
 app:
-    pytest app.py
+	python -m pylint app.py
 run: app
-    flask run
+	python -m flask run
