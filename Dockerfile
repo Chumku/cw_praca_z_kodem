@@ -8,6 +8,7 @@ WORKDIR /app
 COPY . /app
 
 # Install any needed dependencies specified in requirements.txt
+RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt || { echo "Failed to install dependencies" ; exit 1; }
 
 # Make port 80 available to the world outside this container
