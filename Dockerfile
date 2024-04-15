@@ -1,17 +1,21 @@
-FROM ubuntu:latest
+# Użyj oficjalnie dostępnego obrazu Pythona 3.9
+FROM python:3.9
 
-RUN apt-get update
-RUN apt-get install python3 -y
-RUN apt-get install python3-pip -y
+# Ustawiamy katalog roboczy w kontenerze
+WORKDIR /app
 
-ENV HOME /home
-COPY dbot.py /home/dbot.py
-STOPSIGNAL SIGTERM
-WORKDIR /home
+# Skopiuj plik wymagań i zainstaluj zależności
+COPY requirements.txt requirements.txt
+RUN pip install -r requirements.txt
 
-COPY requirements.txt /home/requirements.txt
-RUN pip3 install -r requirements.txt
+# Skopiuj zawartość bieżącego katalogu do katalogu /app w kontenerze
+COPY . .
 
-ENTRYPOINT ["python3"]
+# Zdefiniuj zmienną środowiskową FLASK_APP
+ENV FLASK_APP=app.py
 
-CMD ["dbot.py"]
+# Domyślny port, na którym będzie działać aplikacja
+EXPOSE 5000
+
+# Uruchom aplikację Flask
+CMD ["flask", "run", "--host=0.0.0.0"]
