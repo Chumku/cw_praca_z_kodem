@@ -1,21 +1,20 @@
-# Użyj oficjalnie dostępnego obrazu Pythona 3.9
-FROM python:3.9
+# Use an official Python runtime as the base image
+FROM python:3.9-slim
 
-# Ustawiamy katalog roboczy w kontenerze
+# Set the working directory in the container
 WORKDIR /app
 
-# Skopiuj plik wymagań i zainstaluj zależności
-COPY requirements.txt requirements.txt
-RUN pip install -r requirements.txt
+# Copy the current directory contents into the container at /app
+COPY . /app
 
-# Skopiuj zawartość bieżącego katalogu do katalogu /app w kontenerze
-COPY . .
+# Install any needed dependencies specified in requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Zdefiniuj zmienną środowiskową FLASK_APP
-ENV FLASK_APP=app.py
+# Make port 80 available to the world outside this container
+EXPOSE 80
 
-# Domyślny port, na którym będzie działać aplikacja
-EXPOSE 5000
+# Define environment variable
+ENV NAME World
 
-# Uruchom aplikację Flask
-CMD ["flask", "run", "--host=0.0.0.0"]
+# Run app.py when the container launches
+CMD ["python", "app.py"]
