@@ -1,0 +1,8 @@
+aiohttp==3.6.2
+async-timeout==3.0.1
+attrs==10.3.0
+chardet==3.0.4
+idna==2.9
+idna-ssl==1.1.0
+multidict==4.7.6
+yasrl==1.4.2
